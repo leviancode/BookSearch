@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="search_options">
+        <item>@string/search_all</item>
+        <item>@string/search_by_author</item>
+        <item>@string/search_by_title</item>
+        <item>@string/search_by_publisher</item>
+    </string-array>
+</resources>

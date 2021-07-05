@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Book Search</string>
+    <string name="title_books">Книги</string>
+    <string name="title_settings">Настройки</string>
+    <string name="there_is_always_na_book_you_need">Нужна книга всегда\\n найдется</string>
+</resources>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Book Search</string>
+    <string name="title_books">Books</string>
+    <string name="title_settings">Settings</string>
+    <string name="there_is_always_na_book_you_need">There is always\na book you need</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Book</string>
+    <string name="search_options">Search options</string>
+    <string name="settings_desc">Specify the parameters by which to search for books:</string>
+
+    <string name="search_all">Search all</string>
+    <string name="search_by_author">By author</string>
+    <string name="search_by_title">By tittle</string>
+    <string name="search_by_publisher">By publisher</string>
+    <string name="book_cover">Book cover</string>
+</resources>
