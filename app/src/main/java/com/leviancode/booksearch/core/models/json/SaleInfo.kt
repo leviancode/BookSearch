@@ -1,11 +1,11 @@
 package com.leviancode.booksearch.core.models.json
 
 data class SaleInfo(
-    val buyLink: String,
-    val country: String,
-    val isEbook: Boolean,
-    val listPrice: ListPrice,
-    val offers: List<Offer>,
-    val retailPrice: RetailPriceX,
-    val saleability: String
+    var buyLink: String = "",
+    var country: String = "",
+    var isEbook: Boolean = false,
+    var listPrice: ListPrice = ListPrice(),
+    var offers: List<Offer> = listOf(),
+    var retailPrice: RetailPriceX = RetailPriceX(),
+    var saleability: String = ""
 )

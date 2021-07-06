@@ -1,14 +1,14 @@
 package com.leviancode.booksearch.core.models.json
 
 data class AccessInfo(
-    val accessViewStatus: String,
-    val country: String,
-    val embeddable: Boolean,
-    val epub: Epub,
-    val pdf: Pdf,
-    val publicDomain: Boolean,
-    val quoteSharingAllowed: Boolean,
-    val textToSpeechPermission: String,
-    val viewability: String,
-    val webReaderLink: String
+    var accessViewStatus: String = "",
+    var country: String = "",
+    var embeddable: Boolean = false,
+    var epub: Epub = Epub(),
+    var pdf: Pdf = Pdf(),
+    var publicDomain: Boolean = false,
+    var quoteSharingAllowed: Boolean = false,
+    var textToSpeechPermission: String = "",
+    var viewability: String = "",
+    var webReaderLink: String = ""
 )

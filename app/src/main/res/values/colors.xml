@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="book_title">#000000</color>
+    <color name="book_author">#333333</color>
+    <color name="search_option">#000000</color>
+    <color name="settings_desc">#232323</color>
 </resources>

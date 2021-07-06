@@ -1,7 +1,7 @@
 package com.leviancode.booksearch.core.models.json
 
 data class BookListResponse(
-    val items: List<Item>,
-    val kind: String,
-    val totalItems: Int
+    var items: List<Item> = listOf(),
+    var kind: String = "",
+    var totalItems: Int = 0
 )

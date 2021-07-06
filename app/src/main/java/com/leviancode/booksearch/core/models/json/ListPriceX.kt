@@ -1,6 +1,6 @@
 package com.leviancode.booksearch.core.models.json
 
 data class ListPriceX(
-    val amountInMicros: Int,
-    val currencyCode: String
+    var amountInMicros: Long = 0,
+    var currencyCode: String = ""
 )

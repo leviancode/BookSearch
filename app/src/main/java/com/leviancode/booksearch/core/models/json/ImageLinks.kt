@@ -1,6 +1,6 @@
 package com.leviancode.booksearch.core.models.json
 
 data class ImageLinks(
-    val smallThumbnail: String,
-    val thumbnail: String
+    var smallThumbnail: String = "",
+    var thumbnail: String = ""
 )

@@ -4,7 +4,7 @@
     <string name="title_settings">Settings</string>
     <string name="there_is_always_na_book_you_need">There is always\na book you need</string>
     <string name="search">Search</string>
-    <string name="search_hint">Book</string>
+    <string name="search_hint">Book Search</string>
     <string name="search_options">Search options</string>
     <string name="settings_desc">Specify the parameters by which to search for books:</string>
 

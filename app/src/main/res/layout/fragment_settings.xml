@@ -31,7 +31,7 @@
             app:layout_constraintTop_toBottomOf="@id/settings_app_bar"
             android:gravity="start"
             android:layout_margin="16dp"
-            android:textColor="#232323"
+            android:textColor="@color/settings_desc"
             android:textSize="18sp"
             android:text="@string/settings_desc"/>
 

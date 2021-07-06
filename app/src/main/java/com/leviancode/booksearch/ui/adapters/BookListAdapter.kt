@@ -2,13 +2,14 @@ package com.leviancode.booksearch.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.leviancode.booksearch.core.models.Book
 import com.leviancode.booksearch.databinding.ListItemBookBinding
 
-class BookListAdapter : ListAdapter<Book, BookListAdapter.BookViewHolder>(BooksDiffUtil()) {
+class BookListAdapter : PagingDataAdapter<Book, BookListAdapter.BookViewHolder>(BooksDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         return BookViewHolder(
@@ -22,7 +23,7 @@ class BookListAdapter : ListAdapter<Book, BookListAdapter.BookViewHolder>(BooksD
 
     class BookViewHolder(private val binding: ListItemBookBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: Book){
+        fun bind(item: Book?){
             binding.model = item
             binding.executePendingBindings()
         }

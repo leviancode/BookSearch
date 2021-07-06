@@ -19,7 +19,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:title="@string/app_name"
-                app:menu="@menu/books_toolbar"/>
+                app:menu="@menu/books_toolbar">
+
+                <SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:queryHint="@string/search_hint"
+                    android:iconifiedByDefault="false"/>
+
+            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -27,6 +36,7 @@
             android:id="@+id/book_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@id/books_app_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -42,28 +42,31 @@ class SettingsFragment : Fragment() {
     private fun setListeners() {
         binding.settingsToolbar.setNavigationOnClickListener { close() }
         binding.searchOptionList.setOnItemClickListener { parent, view, position, id ->
-            saveSelectedSearchOption(position)
-            close()
+            lifecycleScope.launch {
+                saveSelectedSearchOption(position)
+            }.invokeOnCompletion {
+                close()
+            }
         }
     }
 
-    private fun saveSelectedSearchOption(optionIndex: Int) {
-        lifecycleScope.launch {
-            requireContext().dataStore.edit { pref ->
-                pref[stringPreferencesKey(PREF_KEY_FILTER)] = SearchFilter.values()[optionIndex].name
-            }
+    private suspend fun saveSelectedSearchOption(optionIndex: Int) {
+        requireContext().dataStore.edit { pref ->
+            pref[stringPreferencesKey(PREF_KEY_FILTER)] = SearchFilter.values()[optionIndex].name
         }
     }
 
     private fun setupListView() {
        val adapter =  ArrayAdapter(
             requireContext(),
-            R.layout.list_item_search_option,
+            android.R.layout.simple_list_item_single_choice,
             resources.getStringArray(R.array.search_options)
         )
         binding.searchOptionList.adapter = adapter
-        binding.searchOptionList.setSelection(getIndexOfCurrentFilter())
+        binding.searchOptionList.setItemChecked(getIndexOfCurrentFilter(), true)
     }
 
-    private fun getIndexOfCurrentFilter() = SearchFilter.valueOf(args.currentFilter).ordinal
+    private fun getIndexOfCurrentFilter() = if (args.currentFilter.isNotBlank()){
+        SearchFilter.valueOf(args.currentFilter).ordinal
+    } else 0
 }

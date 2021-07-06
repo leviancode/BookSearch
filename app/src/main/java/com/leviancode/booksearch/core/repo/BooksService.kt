@@ -8,11 +8,11 @@ import retrofit2.http.Query
 interface BooksService {
 
     @GET("volumes")
-    fun getBooks(
+    suspend fun getBooks(
         @Query("q") query: String,
         @Query("printType") printType: String,
         @Query("startIndex") startIndex: Int,
         @Query("maxResults") maxResults: Int,
         @Query("key") apiKey: String
-    ): Call<BookListResponse>
+    ): BookListResponse
 }
