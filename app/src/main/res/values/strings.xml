@@ -12,5 +12,11 @@
     <string name="search_by_author">By author</string>
     <string name="search_by_title">By tittle</string>
     <string name="search_by_publisher">By publisher</string>
+
+    <string name="search_books">Books</string>
+    <string name="search_magazines">Magazines</string>
+
     <string name="book_cover">Book cover</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="search_by_type_of_publication">Search by type of publication:</string>
 </resources>

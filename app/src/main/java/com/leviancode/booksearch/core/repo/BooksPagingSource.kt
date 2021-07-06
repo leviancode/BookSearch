@@ -1,13 +1,13 @@
 package com.leviancode.booksearch.core.repo
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.leviancode.booksearch.core.models.Book
 import com.leviancode.booksearch.core.models.Query
 import com.leviancode.booksearch.core.models.json.Item
 
 class BooksPagingSource(val query: Query, val service: BooksService): PagingSource<Int, Item>()  {
+    private val BOOKS_API_KEY = "AIzaSyC2T40Yy4ooq958nRoBE6EAq2NsMrQPtEw"
+    private val RESULT_COUNT = 20
 
     override fun getRefreshKey(state: PagingState<Int, Item>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -20,11 +20,11 @@ class BooksPagingSource(val query: Query, val service: BooksService): PagingSour
         val pageIndex = params.key ?: 1
         return try {
             val response = service.getBooks(
-                query.getQueryWithFilter(),
-                query.printType.name,
-                pageIndex,
-                query.resultCount,
-                BooksRepository.BOOKS_API_KEY
+                query = query.getQueryWithFilter(),
+                printType = query.printType.name.lowercase(),
+                startIndex = pageIndex,
+                maxResults = RESULT_COUNT,
+                apiKey = BOOKS_API_KEY
             )
 
             val books = response.items
@@ -33,7 +33,7 @@ class BooksPagingSource(val query: Query, val service: BooksService): PagingSour
                 if (books.isEmpty()) {
                     null
                 } else {
-                    pageIndex + query.resultCount
+                    pageIndex + RESULT_COUNT
                 }
             LoadResult.Page(
                 data = books,

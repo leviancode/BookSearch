@@ -11,8 +11,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object BooksRepository {
-    const val BOOKS_API_BASE_URL = "https://www.googleapis.com/books/v1/"
-    const val BOOKS_API_KEY = "AIzaSyC2T40Yy4ooq958nRoBE6EAq2NsMrQPtEw"
+    private const val BOOKS_API_BASE_URL = "https://www.googleapis.com/books/v1/"
+    private const val RESULT_COUNT = 20
 
     private val booksService: BooksService = Retrofit.Builder()
         .baseUrl(BOOKS_API_BASE_URL)
@@ -23,7 +23,7 @@ object BooksRepository {
     fun find(query: Query): Flow<PagingData<Item>> {
         return Pager(
             config = PagingConfig(
-                pageSize = query.resultCount,
+                pageSize = RESULT_COUNT,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {

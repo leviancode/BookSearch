@@ -1,6 +1,5 @@
 package com.leviancode.booksearch.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,18 +13,21 @@ import com.leviancode.booksearch.core.models.Query
 import com.leviancode.booksearch.core.models.SearchFilter
 import com.leviancode.booksearch.core.models.json.Item
 import com.leviancode.booksearch.core.repo.BooksRepository
+import com.leviancode.booksearch.ui.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class BooksViewModel : ViewModel(){
     private val repository = BooksRepository
     private val query = Query
-    private val _data = MutableLiveData<PagingData<Book>?>()
-    val data: LiveData<PagingData<Book>?> = _data
+    private val _data = MutableLiveData<PagingData<Book>>()
+    val data: LiveData<PagingData<Book>> = _data
+
+    private val _invalidateList = SingleLiveEvent<Unit>()
+    val invalidateList: LiveData<Unit> = _invalidateList
 
     fun search(keyword: String) {
         search(query.apply {
@@ -33,24 +35,14 @@ class BooksViewModel : ViewModel(){
         })
     }
 
-  /*  fun search(keyword: String) = repository.find(query.apply {
-        this.keyword = keyword
-    }).map { it.map { it.toBook() } }
-        .cachedIn(viewModelScope)
-*/
     private fun search(query: Query){
-        if (query.keyword.isBlank()){
-            _data.value = null
-        } else {
-            viewModelScope.launch(Dispatchers.IO) {
-                repository.find(query)
-                    .map { it.map { it.toBook() } }
-                    .cachedIn(viewModelScope)
-                    //.distinctUntilChanged()
-                    .collect {
-                        _data.postValue(it)
-                    }
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.find(query)
+                .map { it.map { it.toBook() } }
+                .cachedIn(viewModelScope)
+                .collect {
+                    _data.postValue(it)
+                }
         }
     }
 
@@ -63,18 +55,14 @@ class BooksViewModel : ViewModel(){
         search(query)
     }
 
-    fun setPrintType(type: PrintType){
-        query.printType = type
+    fun setPrintType(type: String){
+        query.printType = try {
+            PrintType.valueOf(type)
+        } catch (e: Exception){
+            PrintType.ALL
+        }
         search(query)
     }
-
-    fun setMaxResult(max: Int){
-        query.resultCount = if (max <= 40) max else 40
-        search(query)
-    }
-
-    fun getFilter(): String = query.filter.name
-
 
     private fun Item.toBook(): Book{
         return Book(

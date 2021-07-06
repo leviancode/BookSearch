@@ -6,4 +6,11 @@
         <item>@string/search_by_author</item>
         <item>@string/search_by_publisher</item>
     </string-array>
+
+    <string-array name="search_options_pup_type">
+        <item>@string/search_all</item>
+        <item>@string/search_books</item>
+        <item>@string/search_magazines</item>
+    </string-array>
+
 </resources>

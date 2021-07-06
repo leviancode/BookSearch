@@ -4,4 +4,17 @@
     <string name="title_books">Книги</string>
     <string name="title_settings">Настройки</string>
     <string name="there_is_always_na_book_you_need">Нужна книга всегда\\n найдется</string>
+    <string name="search">Поиск</string>
+    <string name="search_hint">Поиск книг</string>
+    <string name="search_options">Настройки поиска</string>
+    <string name="settings_desc">Уточните параметры, по которым искать книги:</string>
+    <string name="search_all">Поиск по всему</string>
+    <string name="search_by_author">По автору</string>
+    <string name="search_by_title">По названию</string>
+    <string name="search_by_publisher">По издателю</string>
+    <string name="book_cover">Обложка книги</string>
+    <string name="no_internet">Нет интернет соединения</string>
+    <string name="search_books">Книги</string>
+    <string name="search_magazines">Журналы</string>
+    <string name="search_by_type_of_publication">Искать по типу издания:</string>
 </resources>

@@ -12,17 +12,17 @@
         tools:layout="@layout/fragment_books" >
         <action
             android:id="@+id/action_navigation_books_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
+            app:destination="@id/navigation_settings"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.leviancode.booksearch.ui.fragments.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" >
-        <argument
-            android:name="currentFilter"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_settings"/>
 
 </navigation>

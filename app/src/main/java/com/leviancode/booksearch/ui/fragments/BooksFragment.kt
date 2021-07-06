@@ -2,24 +2,19 @@ package com.leviancode.booksearch.ui.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import com.leviancode.booksearch.R
-import com.leviancode.booksearch.core.repo.BooksRepository
 import com.leviancode.booksearch.databinding.FragmentBooksBinding
 import com.leviancode.booksearch.ui.adapters.BookListAdapter
-import com.leviancode.booksearch.ui.utils.PREF_KEY_FILTER
-import com.leviancode.booksearch.ui.utils.dataStore
-import com.leviancode.booksearch.ui.utils.navigate
+import com.leviancode.booksearch.ui.utils.*
 import com.leviancode.booksearch.ui.viewmodels.BooksViewModel
 import com.pawegio.kandroid.onQueryChange
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class BooksFragment : Fragment() {
@@ -41,26 +36,32 @@ class BooksFragment : Fragment() {
         setupRecyclerView()
         setListeners()
         observeData()
-        observeSearchFilters()
+        observeSettings()
     }
 
     private fun observeData() {
         viewModel.data.observe(viewLifecycleOwner) { book ->
-            if (book != null) {
-                lifecycleScope.launchWhenStarted {
-                    listAdapter.submitData(book)
-                }
+            lifecycleScope.launchWhenStarted {
+                listAdapter.submitData(book)
             }
-            emptyListTextVisibility(book == null)
-
+        }
+        viewModel.invalidateList.observe(viewLifecycleOwner){
+            listAdapter.submitData(lifecycle, PagingData.empty())
+            listAdapter.notifyDataSetChanged()
         }
     }
 
-    private fun observeSearchFilters() {
+    private fun observeSettings() {
         lifecycleScope.launchWhenStarted {
             requireContext().dataStore.data.collect { pref ->
                 val filter = pref[stringPreferencesKey(PREF_KEY_FILTER)] ?: ""
                 viewModel.setFilter(filter)
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            requireContext().dataStore.data.collect { pref ->
+                val printType = pref[stringPreferencesKey(PREF_KEY_PRINT_TYPE)] ?: ""
+                viewModel.setPrintType(printType)
             }
         }
     }
@@ -77,13 +78,24 @@ class BooksFragment : Fragment() {
         }
         binding.searchView.onQueryChange { query ->
             lifecycleScope.launch {
+                if (checkInternetConnection()){
+                    emptyListTextVisibility(query.isBlank())
+                }
                 viewModel.search(query)
             }
 
         }
         binding.booksToolbar.menu.findItem(R.id.navigation_settings).setOnMenuItemClickListener {
-            openSettings(viewModel.getFilter())
+            openSettings()
             return@setOnMenuItemClickListener true
+        }
+    }
+
+    private fun checkInternetConnection(): Boolean {
+        return ConnectionManager.isInternetAvailable(requireContext()).also { ok ->
+            if (!ok){
+                Toast.makeText(requireContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -92,9 +104,9 @@ class BooksFragment : Fragment() {
         binding.bookList.adapter = listAdapter
     }
 
-    private fun openSettings(currentFilter: String) {
+    private fun openSettings() {
         navigate {
-            BooksFragmentDirections.actionNavigationBooksToNavigationSettings(currentFilter)
+            BooksFragmentDirections.actionNavigationBooksToNavigationSettings()
         }
     }
 }
